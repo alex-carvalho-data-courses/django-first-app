@@ -4,7 +4,7 @@
 
 ### Quick summary
 
-Project to follow the official [djanto - first app tutorial](https://docs.djangoproject.com/en/4.1/intro/tutorial01/).  
+Project to follow the official [django - first app tutorial](https://docs.djangoproject.com/en/4.1/intro/tutorial01/).  
 
 
 ## How do I get set up? ##
