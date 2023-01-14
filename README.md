@@ -21,23 +21,16 @@ Project to follow the official [django - first app tutorial](https://docs.django
 
 ### Dependencies
 
-#### Docker
+#### Docker 20.10.22
 
-version 20.10.22
+#### Terraform 1.3.7
 
-#### Terraform
+#### Python 3.10.6
 
-version 1.3.7
-
-#### Python
-
-version 3.10.6
-
-#### Poetry  
-
-version 1.2.1
+#### Poetry 1.2.1
 
 #### PostgreSql Linux Dependencies  
+
 To bridge **python** to **PostgreSql** the library **Psycopg2** is used.  
 **Psycopg2** is a python wrapper for the official PostgreSql 
 [libpq](https://www.postgresql.org/docs/current/libpq.html) C library.  
@@ -103,13 +96,21 @@ It creates the PostgreSql volume and downloads the Image from Docker hub.
 It should be executed once.
 
 ```shell
-cd infra/terraform/build/ && terraform apply && cd ../../..
+cd infra/terraform/build/ && terraform apply && terraform init && cd ../../..
 ```
 
 ##### Terraform exec
 
 It runs the PostgreSql server container.  
 It should be executed every time you want to turn on the infrastructure.
+
+###### First time
+
+```shell
+cd infra/terraform/exec/ && terraform apply && terraform init && cd ../../..
+```
+
+###### Other executions
 
 ```shell
 cd infra/terraform/exec/ && terraform apply && cd ../../..
