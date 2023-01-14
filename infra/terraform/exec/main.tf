@@ -12,13 +12,13 @@ provider "docker" {
 }
 
 resource "docker_image" "postgres" {
-  name = "postgres:15"
+  name = "postgres:14"
   keep_locally = true
 }
 
 resource "docker_container" "postgres_django" {
   name = "postgres_django"
-  image = docker_image.postgres.image_id
+  image = docker_image.postgres.name
   volumes {
     container_path = "/var/lib/postgresql/data"
     volume_name = "postgres-django"

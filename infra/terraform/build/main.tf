@@ -16,5 +16,5 @@ resource "docker_volume" "postgres_django" {
 }
 
 resource "docker_image" "postgres" {
-  name = "postgres:15"
+  name = "postgres:14"
 }
