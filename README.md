@@ -23,13 +23,13 @@ Project to follow the official [django - first app tutorial](https://docs.django
 
 #### <img src="img/docker.png" alt="docker" width="30" style="vertical-align: middle;"> Docker 20.10.22
 
-#### Terraform 1.3.7
+#### <img src="img/terraform-logo.png" alt="terraform" width="30" style="vertical-align: middle;"> Terraform 1.3.7
 
-#### Python 3.10.6
+#### <img src="img/python.png" alt="python" width="30" style="vertical-align: middle;"> Python 3.10.6
 
-#### Poetry 1.2.1
+#### <img src="img/poetry-python.svg" alt="poetry" width="30" style="vertical-align: middle;"> Poetry 1.2.1
 
-#### PostgreSql Linux Dependencies  
+#### <img src="img/postgresql.png" alt="postgres" width="30" style="vertical-align: middle;"> PostgreSql Linux Dependencies  
 
 To bridge **python** to **PostgreSql** the library **Psycopg2** is used.  
 **Psycopg2** is a python wrapper for the official PostgreSql 
