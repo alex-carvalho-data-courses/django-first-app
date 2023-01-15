@@ -21,7 +21,7 @@ Project to follow the official [django - first app tutorial](https://docs.django
 
 ### Dependencies
 
-#### Docker 20.10.22
+#### <img src="img/docker.png" alt="docker" width="30" style="vertical-align: middle;"> Docker 20.10.22
 
 #### Terraform 1.3.7
 
