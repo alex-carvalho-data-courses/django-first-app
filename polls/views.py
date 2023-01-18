@@ -1,42 +1,30 @@
-from django.http import (
-    HttpResponse, HttpRequest, Http404, HttpResponseRedirect
-)
+from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from django.template import loader
 from django.urls import reverse
+from django.views import generic
 from polls.models import Choice, Question
 
 
-def index(request: HttpRequest) -> HttpResponse:
-    latest_5_questions = Question.objects.order_by('-pub_date')[:5]
+class Index(generic.ListView):
+    context_object_name = 'latest_5_questions'
+    template_name = 'polls/index.html'
 
-    template = loader.get_template('polls/index.html')
-    context = {
-        'latest_5_questions': latest_5_questions
-    }
-
-    return HttpResponse(template.render(context, request))
+    def get_queryset(self):
+        return Question.objects.order_by('-pub_date')[:5]
 
 
-def detail(request: HttpRequest, question_id: int) -> HttpResponse:
-    try:
-        question = Question.objects.get(pk=question_id)
-    except Question.DoesNotExist:
-        raise Http404('Question does not exist')
-
-    # shortcut for the approach used in index() - loader + template.render()
-    # + HttpResponse
-    return render(request, 'polls/detail.html', {'question': question})
+class Detail(generic.DetailView):
+    model = Question
+    template_name = 'polls/detail.html'
 
 
-def results(request: HttpRequest, question_id: int) -> HttpResponse:
-    question = get_object_or_404(Question, pk=question_id)
-
-    return render(request, 'polls/results.html', {'question': question})
+class Results(generic.DetailView):
+    model = Question
+    template_name = 'polls/results.html'
 
 
 def vote(request: HttpRequest, question_id: int) -> HttpResponse:
-    # shortcut for the pattern try + .objects.get + except used at detail()
+    # shortcut for the pattern try + .objects.get + except
     question = get_object_or_404(Question, pk=question_id)
 
     try:
