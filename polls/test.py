@@ -19,6 +19,29 @@ def create_question(question_text: str, days_offset: int) -> Question:
     )
 
 
+class QuestionDetailViewTest(TestCase):
+
+    def test_future_question(self) -> None:
+        """
+        The detail view of question with pub_date in the future should return
+        a 404 not found
+        """
+        future_question = create_question('how was yesterday?', 1)
+        url = reverse('polls:detail', args=[future_question.id])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
+
+    def test_past_question(self) -> None:
+        """
+        The detail view of question with pub_date in the past displays the
+        question's text.
+        """
+        past_question = create_question('who died?', -1)
+        url = reverse('polls:detail', args=[past_question.id])
+        response = self.client.get(url)
+        self.assertContains(response, past_question.question_text)
+
+
 class QuestionIndexViewTests(TestCase):
 
     def test_no_questions(self) -> None:

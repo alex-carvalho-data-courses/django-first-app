@@ -1,3 +1,4 @@
+from django.db.models.query import QuerySet
 from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
@@ -10,7 +11,7 @@ class Index(generic.ListView):
     context_object_name = 'latest_5_questions'
     template_name = 'polls/index.html'
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         """Return the last 5 published questions
         (not including those set to be published in the future)"""
         return Question.objects.filter(
@@ -21,6 +22,11 @@ class Index(generic.ListView):
 class Detail(generic.DetailView):
     model = Question
     template_name = 'polls/detail.html'
+
+    def get_queryset(self) -> QuerySet:
+        return Question.objects.filter(
+            pub_date__lte=timezone.now()
+        )
 
 
 class Results(generic.DetailView):
