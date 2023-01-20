@@ -13,6 +13,7 @@ class QuestionAdmin(admin.ModelAdmin):
     at the admin page. However, we'll organize the admin page by fieldsets.
     fields = ['pub_date', 'question_text']
     """
+    list_display = ['question_text', 'pub_date', 'was_published_recently']
     fieldsets = [
         (None, {'fields': ['question_text']}),
         ('Date information', {'fields': ['pub_date']}),
