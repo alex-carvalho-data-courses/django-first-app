@@ -1,5 +1,9 @@
 FROM python:3.10
 
+################
+# Apache Httpd #
+################
+
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 #RUN groupadd -r www-data && useradd -r --create-home -g www-data www-data
 
@@ -233,7 +237,32 @@ RUN set -eux; \
 # https://httpd.apache.org/docs/2.4/stopping.html#gracefulstop
 STOPSIGNAL SIGWINCH
 
+EXPOSE 80
+
+###########################
+# mod_wsgi (Apache pyton) #
+###########################
+WORKDIR /tmp
+RUN apt-get update; \
+	apt-get install -y apache2-dev; \
+    rm -rf /var/lib/apt/lists/*; \
+    wget -O mod_wsgi-4.9.4.tar.gz \
+      https://github.com/GrahamDumpleton/mod_wsgi/archive/refs/tags/4.9.4.tar.gz; \
+    tar xvfz mod_wsgi-4.9.4.tar.gz; \
+    cd mod_wsgi-4.9.4; \
+    ./configure --with-apxs=/usr/local/apache2/bin/apxs \
+        --with-python=/usr/local/bin/python; \
+    make; \
+    make install; \
+    echo "LoadModule wsgi_module modules/mod_wsgi.so" \
+      >> /usr/local/apache2/conf/httpd.conf; \
+    make clean; \
+    make distclean; \
+    cd ..; \
+    rm -r mod*
+
+WORKDIR $HTTPD_PREFIX
+
 COPY httpd-foreground /usr/local/bin/
 
-EXPOSE 80
 CMD ["httpd-foreground"]
