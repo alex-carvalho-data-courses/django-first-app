@@ -239,6 +239,14 @@ STOPSIGNAL SIGWINCH
 
 EXPOSE 80
 
+
+##########
+# Poetry #
+##########
+RUN curl -sSL https://install.python-poetry.org | python3 -
+ENV PATH /root/.local/bin:$PATH
+
+
 ###########################
 # mod_wsgi (Apache pyton) #
 ###########################
