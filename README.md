@@ -127,3 +127,8 @@ poetry run python manage.py migrate
 ### Repo owner or admin
 
 [alex carvalho](mailto:alex.carvalho.data@gmail.com)  
+
+## CHANGE_ME - docker django image build command
+```shell
+ docker image build -t local/apache-httpd-mod-wsgi:0.3.0 --build-arg DOMAIN_NAME=mysite.com --build-arg DJANGO_PROJECT_NAME=mysite .
+```
