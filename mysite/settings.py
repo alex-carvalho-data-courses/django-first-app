@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
+import os
 
 from pathlib import Path
 
@@ -77,11 +78,11 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'django_db',
-        'USER': 'django',
-        'PASSWORD': 'alex123x',
-        'HOST': 'postgres_django',
-        'POST': '5432',
+        'NAME': os.environ['DJANGO_POSTGRES_DB'],
+        'USER': os.environ['DJANGO_POSTGRES_USER'],
+        'PASSWORD': os.environ['DJANGO_POSTGRES_PASSWORD'],
+        'HOST': os.environ['DJANGO_POSTGRES_DB_HOST'],
+        'PORT': os.environ['DJANGO_POSTGRES_DB_PORT']
     }
 }
 
