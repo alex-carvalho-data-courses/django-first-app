@@ -45,14 +45,16 @@ resource "docker_container" "postgres_django" {
   }
 }
 
-resource "docker_image" "apache_httpd_mod_wsgi" {
-  name = "local/apache-httpd-mod-wsgi:0.3.0"
+resource "docker_image" "django_mysite_polls" {
+  name = "local/django-mysite-polls:0.1.0"
   keep_locally = true
 }
 
-resource "docker_container" "django_mysite" {
-  name = "django_mysite"
-  image = docker_image.apache_httpd_mod_wsgi.name
+resource "docker_container" "django_mysite_polls" {
+  name = "django-mysite-polls"
+  image = docker_image.django_mysite_polls.name
+
+  depends_on = [docker_container.postgres_django]
 
   env = [
     "DJANGO_PROJECT_NAME=mysite",
