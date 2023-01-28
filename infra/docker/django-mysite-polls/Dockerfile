@@ -5,11 +5,12 @@ FROM local/apache-httpd-mod-wsgi:0.4.0
 ##########
 # for the command `django-admin startproject mysite`,
 # DJANGO_PROJECT_NAME should be `mysite
-# TODO: Fork this image into djnago-mysite
-# TODO: Add git repository as a required build ARG
+# TODO: Fix css with apache setup
 ARG DJANGO_PROJECT_NAME
+ARG DJANGO_PROJECT_GIT_REPO
 # Make args mandatory
 ARG CHECK=${DJANGO_PROJECT_NAME:?}
+ARG CHECK=${DJANGO_PROJECT_GIT_REPO:?}
 
 ENV DJANGO_PROJECT_NAME=$DJANGO_PROJECT_NAME
 ENV DJANGO_WSGI_PYTHON_PATH=/opt/www/python-project
@@ -24,7 +25,7 @@ RUN mkdir -p $DJANGO_WSGI_PYTHON_PATH, \
     mkdir -p $APACHE_SITE_DOCUMENTS
 WORKDIR $DJANGO_WSGI_PYTHON_PATH
 
-RUN git clone https://github.com/alex-carvalho-data-courses/django-first-app.git .; \
+RUN git clone $DJANGO_PROJECT_GIT_REPO .; \
     git checkout apache; \
     poetry install --no-root; \
     DJANGO_WSGI_PYTHON_HOME=$(poetry env info --path); \

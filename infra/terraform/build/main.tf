@@ -41,6 +41,7 @@ resource "docker_image" "django_mysite_polls" {
     tag     = ["local/django-mysite-polls:0.2.0"]
     build_args = {
       DJANGO_PROJECT_NAME : "mysite"
+      DJANGO_PROJECT_GIT_REPO : "https://github.com/alex-carvalho-data-courses/django-first-app.git"
     }
     label = {
       author : "alex carvalho"

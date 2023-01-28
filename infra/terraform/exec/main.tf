@@ -55,11 +55,11 @@ resource "docker_container" "django_mysite_polls" {
   image = docker_image.django_mysite_polls.name
 
   depends_on = [docker_container.postgres_django]
-
+  # TODO: make DJANGO_POSTGRES_HOST terraform dynamic
   env = [
     "DJANGO_PROJECT_NAME=mysite",
-    "DJANGO_POSTGRES_DB_HOST=postgres_django",
-    "DJANGO_POSTGRES_DB_PORT=5432",
+    "DJANGO_POSTGRES_HOST=postgres_django",
+    "DJANGO_POSTGRES_PORT=5432",
     "DJANGO_POSTGRES_DB=django_db",
     "DJANGO_POSTGRES_USER=django",
     "DJANGO_POSTGRES_PASSWORD=alex123x"
