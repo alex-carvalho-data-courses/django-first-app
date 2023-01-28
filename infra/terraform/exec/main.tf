@@ -46,7 +46,7 @@ resource "docker_container" "postgres_django" {
 }
 
 resource "docker_image" "django_mysite_polls" {
-  name = "local/django-mysite-polls:0.1.0"
+  name = "local/django-mysite-polls:latest"
   keep_locally = true
 }
 
