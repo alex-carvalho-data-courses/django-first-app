@@ -24,6 +24,7 @@ RUN mkdir -p $DJANGO_WSGI_PYTHON_PATH, \
     mkdir -p $APACHE_SITE_DOCUMENTS
 WORKDIR $DJANGO_WSGI_PYTHON_PATH
 
+# TODO: Remove apache branch checkout before apache branch merge into main
 RUN git clone $DJANGO_PROJECT_GIT_REPO .; \
     git checkout apache; \
     poetry install --no-root; \
