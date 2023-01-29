@@ -55,7 +55,7 @@ resource "docker_container" "django_mysite_polls" {
   image = docker_image.django_mysite_polls.name
 
   depends_on = [docker_container.postgres_django]
-  # TODO: make DJANGO_POSTGRES_HOST terraform dynamic
+
   env = [
     "DJANGO_PROJECT_NAME=mysite",
     "DJANGO_POSTGRES_HOST=postgres_django",
@@ -73,4 +73,9 @@ resource "docker_container" "django_mysite_polls" {
     internal = 80
     external = 8081
   }
+
+  volumes {
+      container_path = "/opt/www/python-project"
+      host_path = "/home/alex/00alex/git/courses/django-first-app"
+    }
 }

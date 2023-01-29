@@ -16,8 +16,9 @@ ENV DJANGO_PROJECT_NAME=$DJANGO_PROJECT_NAME
 ENV DJANGO_WSGI_PYTHON_PATH=/opt/www/python-project
 ENV DJANGO_WSGI_PROJECT_DIR=$DJANGO_WSGI_PYTHON_PATH/$DJANGO_PROJECT_NAME
 ENV DJANGO_WSGI_SCRIPT_ALIAS=$DJANGO_WSGI_PROJECT_DIR/wsgi.py
+# TODO: remove and test APACHE_SITE_DOCUMENTS env - apparently unused
 ENV APACHE_SITE_DOCUMENTS=/opt/www/documents
-ENV POETRY_VIRTUALENVS_PATH=$DJANGO_WSGI_PYTHON_PATH/virtualenvs
+ENV POETRY_VIRTUALENVS_PATH=/opt/www//virtualenvs
 
 COPY httpd.conf $HTTPD_PREFIX/conf/httpd.conf
 
@@ -39,7 +40,6 @@ RUN git clone $DJANGO_PROJECT_GIT_REPO .; \
         -e "s;{{APACHE_SITE_DOCUMENTS}};$APACHE_SITE_DOCUMENTS;" \
         httpd.conf
 
-# TODO: Add volume to store the cloned directory $DJANGO_WSGI_PYTHON_PATH
-# TODO: Try to mount this volume with the local pycharm code
+VOLUME $DJANGO_WSGI_PYTHON_PATH
 
 WORKDIR $HTTPD_PREFIX
