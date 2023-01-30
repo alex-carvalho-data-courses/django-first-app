@@ -20,8 +20,7 @@ ENV POETRY_VIRTUALENVS_PATH=/opt/www//virtualenvs
 
 COPY httpd.conf $HTTPD_PREFIX/conf/httpd.conf
 
-RUN mkdir -p $DJANGO_WSGI_PYTHON_PATH, \
-    mkdir -p $APACHE_SITE_DOCUMENTS
+RUN mkdir -p $DJANGO_WSGI_PYTHON_PATH
 WORKDIR $DJANGO_WSGI_PYTHON_PATH
 
 # TODO: Remove apache branch checkout before apache branch merge into main
@@ -36,7 +35,6 @@ RUN git clone $DJANGO_PROJECT_GIT_REPO .; \
         -e "s;{{DJANGO_WSGI_PYTHON_HOME}};$DJANGO_WSGI_PYTHON_HOME;" \
         -e "s;{{DJANGO_WSGI_PYTHON_PATH}};$DJANGO_WSGI_PYTHON_PATH;" \
         -e "s;{{DJANGO_WSGI_PROJECT_DIR}};$DJANGO_WSGI_PROJECT_DIR;" \
-        -e "s;{{APACHE_SITE_DOCUMENTS}};$APACHE_SITE_DOCUMENTS;" \
         httpd.conf
 
 VOLUME $DJANGO_WSGI_PYTHON_PATH

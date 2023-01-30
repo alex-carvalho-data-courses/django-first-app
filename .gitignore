@@ -6,3 +6,5 @@ __pycache__/
 terraform.tfstate*
 
 dist/
+
+infra/docker/django-polls-apache/static/

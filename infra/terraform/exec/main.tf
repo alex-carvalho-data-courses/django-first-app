@@ -45,14 +45,14 @@ resource "docker_container" "postgres_django" {
   }
 }
 
-resource "docker_image" "django_mysite_polls" {
-  name = "local/django-mysite-polls:latest"
+resource "docker_image" "django_polls_apache" {
+  name = "local/django-polls-apache:latest"
   keep_locally = true
 }
 
-resource "docker_container" "django_mysite_polls" {
-  name = "django-mysite-polls"
-  image = docker_image.django_mysite_polls.name
+resource "docker_container" "django_polls_apache" {
+  name = "django-polls-apache"
+  image = docker_image.django_polls_apache.name
 
   depends_on = [docker_container.postgres_django]
 
@@ -78,4 +78,27 @@ resource "docker_container" "django_mysite_polls" {
       container_path = "/opt/www/python-project"
       host_path = "/home/alex/00alex/git/courses/django-first-app"
     }
+}
+
+resource "docker_image" "django_polls_nginx_static" {
+  name = "nginx:1.23"
+}
+
+resource "docker_container" "django_polls_nginx_static" {
+  name  = "django-polls-nginx-static"
+  image = docker_image.django_polls_nginx_static.name
+
+  networks_advanced {
+    name = docker_network.django_network.name
+  }
+
+  ports {
+    internal = 80
+    external = 8082
+  }
+
+  volumes {
+    container_path = "/usr/share/nginx/html"
+    host_path = "/home/alex/00alex/git/courses/django-first-app/infra/docker/django-polls-apache"
+  }
 }

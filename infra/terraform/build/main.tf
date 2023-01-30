@@ -32,13 +32,13 @@ resource "docker_image" "apache_httpd_mod_wsgi" {
 }
 
 resource "docker_image" "django_mysite_polls" {
-  name = "local/django-mysite-polls"
+  name = "local/django-polls-apache"
 
   depends_on = [docker_image.apache_httpd_mod_wsgi]
 
   build {
-    context = "../../docker/django-mysite-polls/"
-    tag     = ["local/django-mysite-polls:0.5.5"]
+    context = "../../docker/django-polls-apache/"
+    tag     = ["local/django-polls-apache:0.5.5"]
     build_args = {
       DJANGO_PROJECT_NAME : "mysite"
       DJANGO_PROJECT_GIT_REPO : "https://github.com/alex-carvalho-data-courses/django-first-app.git"
