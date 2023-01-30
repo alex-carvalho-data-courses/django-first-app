@@ -4,13 +4,11 @@ FROM local/apache-httpd-mod-wsgi:0.4.0
 # Django #
 ##########
 # for the command `django-admin startproject mysite`,
-# DJANGO_PROJECT_NAME should be `mysite
-# TODO: Fix css with apache setup
+# DJANGO_PROJECT_NAME should be 'mysite'
+# TODO: Add DJANGO_PROJECT_VERSION as a required ARG
 ARG DJANGO_PROJECT_NAME
-ARG DJANGO_PROJECT_GIT_REPO
 # Make args mandatory
 ARG CHECK=${DJANGO_PROJECT_NAME:?}
-ARG CHECK=${DJANGO_PROJECT_GIT_REPO:?}
 
 ENV DJANGO_PROJECT_NAME=$DJANGO_PROJECT_NAME
 ENV DJANGO_WSGI_PYTHON_PATH=/opt/www/python-project
@@ -20,13 +18,16 @@ ENV POETRY_VIRTUALENVS_PATH=/opt/www//virtualenvs
 
 COPY httpd.conf $HTTPD_PREFIX/conf/httpd.conf
 
-RUN mkdir -p $DJANGO_WSGI_PYTHON_PATH
+RUN mkdir -p $DJANGO_WSGI_PROJECT_DIR
 WORKDIR $DJANGO_WSGI_PYTHON_PATH
 
-# TODO: Remove apache branch checkout before apache branch merge into main
-RUN git clone $DJANGO_PROJECT_GIT_REPO .; \
-    git checkout apache; \
-    poetry install --no-root; \
+COPY pyproject.toml $DJANGO_WSGI_PYTHON_PATH
+# TODO: Calculate dynamically the wheels version based on DJANGO_PROJECT_VERSION
+COPY django_first_app-0.2.0-py3-none-any.whl $DJANGO_WSGI_PYTHON_PATH
+COPY wsgi.py $DJANGO_WSGI_PROJECT_DIR
+
+# TODO: sed edit pyproject.toml to update package version with DJANGO_PROJECT_VERSION
+RUN poetry install --no-root; \
     DJANGO_WSGI_PYTHON_HOME=$(poetry env info --path); \
     chmod 777 $DJANGO_WSGI_PYTHON_HOME; \
     cd $HTTPD_PREFIX/conf; \

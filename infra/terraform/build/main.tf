@@ -38,7 +38,7 @@ resource "docker_image" "django_mysite_polls" {
 
   build {
     context = "../../docker/django-polls-apache/"
-    tag     = ["local/django-polls-apache:0.5.5"]
+    tag     = ["local/django-polls-apache:0.6.5"]
     build_args = {
       DJANGO_PROJECT_NAME : "mysite"
       DJANGO_PROJECT_GIT_REPO : "https://github.com/alex-carvalho-data-courses/django-first-app.git"

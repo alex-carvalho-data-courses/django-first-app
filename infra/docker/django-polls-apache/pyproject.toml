@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "django-first-app-deploy"
+# TODO: edit version with sed from Dockerfile
+version = "0.2.0"
+description = "Project to follow the django tutorial https://docs.djangoproject.com/en/4.1/intro/tutorial01/"
+authors = ["alex carvalho <alex.carvaho.data@gmail.com>"]
+readme = "README.md"
+packages = [{include = "django_first_app"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Django = "^4.1.5"
+psycopg2 = "^2.9.5"
+# TODO: edit version with sed from Dockerfile
+django-first-app = { file = "django_first_app-0.2.0-py3-none-any.whl" }
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
