@@ -74,11 +74,10 @@ resource "docker_container" "django_polls_apache" {
     external = 8081
   }
 
-  # TODO: Test back the local volume binding
-  #volumes {
-  #    container_path = "/opt/www/python-project"
-  #    host_path = "/home/alex/00alex/git/courses/django-first-app"
-  #  }
+  volumes {
+      container_path = "/opt/www/python-project"
+      host_path = "/home/alex/00alex/git/courses/django-first-app"
+  }
 }
 
 resource "docker_image" "django_polls_nginx_static" {
