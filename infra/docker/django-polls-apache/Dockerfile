@@ -5,10 +5,11 @@ FROM local/apache-httpd-mod-wsgi:0.4.0
 ##########
 # for the command `django-admin startproject mysite`,
 # DJANGO_PROJECT_NAME should be 'mysite'
-# TODO: Add DJANGO_PROJECT_VERSION as a required ARG
 ARG DJANGO_PROJECT_NAME
+ARG DJANGO_PROJECT_VERSION
 # Make args mandatory
 ARG CHECK=${DJANGO_PROJECT_NAME:?}
+ARG CHECK=${DJANGO_PROJECT_VERSION:?}
 
 ENV DJANGO_PROJECT_NAME=$DJANGO_PROJECT_NAME
 ENV DJANGO_WSGI_PYTHON_PATH=/opt/www/python-project
@@ -26,8 +27,10 @@ COPY pyproject.toml $DJANGO_WSGI_PYTHON_PATH
 COPY django_first_app-0.2.0-py3-none-any.whl $DJANGO_WSGI_PYTHON_PATH
 COPY wsgi.py $DJANGO_WSGI_PROJECT_DIR
 
-# TODO: sed edit pyproject.toml to update package version with DJANGO_PROJECT_VERSION
-RUN poetry install --no-root; \
+RUN sed -i'.bak' \
+        "s/{{DJANGO_PROJECT_VERSION}}/$DJANGO_PROJECT_VERSION/" \
+        pyproject.toml; \
+    poetry install --no-root; \
     DJANGO_WSGI_PYTHON_HOME=$(poetry env info --path); \
     chmod 777 $DJANGO_WSGI_PYTHON_HOME; \
     cd $HTTPD_PREFIX/conf; \

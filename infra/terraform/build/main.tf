@@ -41,10 +41,12 @@ resource "docker_image" "django_mysite_polls" {
     tag     = ["local/django-polls-apache:0.6.5"]
     build_args = {
       DJANGO_PROJECT_NAME : "mysite"
-      DJANGO_PROJECT_GIT_REPO : "https://github.com/alex-carvalho-data-courses/django-first-app.git"
+      DJANGO_PROJECT_VERSION : "0.2.0"
     }
     label = {
       author : "alex carvalho"
     }
   }
 }
+
+# TODO: create a dedicated image for django-polls-nginx-static

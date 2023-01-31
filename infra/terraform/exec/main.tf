@@ -98,6 +98,7 @@ resource "docker_container" "django_polls_nginx_static" {
     external = 8082
   }
 
+  # TODO: move volume to ../docker/django-polls-nginx-static
   volumes {
     container_path = "/usr/share/nginx/html"
     host_path = "/home/alex/00alex/git/courses/django-first-app/infra/docker/django-polls-apache"
