@@ -23,8 +23,7 @@ RUN mkdir -p $DJANGO_WSGI_PROJECT_DIR
 WORKDIR $DJANGO_WSGI_PYTHON_PATH
 
 COPY pyproject.toml $DJANGO_WSGI_PYTHON_PATH
-# TODO: Calculate dynamically the wheels version based on DJANGO_PROJECT_VERSION
-COPY django_first_app-0.2.0-py3-none-any.whl $DJANGO_WSGI_PYTHON_PATH
+COPY django_first_app-${DJANGO_PROJECT_VERSION}-py3-none-any.whl $DJANGO_WSGI_PYTHON_PATH
 COPY wsgi.py $DJANGO_WSGI_PROJECT_DIR
 
 RUN sed -i'.bak' \
