@@ -81,7 +81,8 @@ resource "docker_container" "django_polls_apache" {
 }
 
 resource "docker_image" "django_polls_nginx_static" {
-  name = "nginx:1.23"
+  name = "local/django-polls-nginx-static:latest"
+  keep_locally = true
 }
 
 resource "docker_container" "django_polls_nginx_static" {
