@@ -14,10 +14,11 @@ Project to follow the official [django - first app tutorial](https://docs.django
 2. Install Terraform  
 3. Install python  
 4. Install poetry (python)  
-5. Install linux postgres packages  
+5. Install linux postgres packages
 6. Install python dependencies  
-7. Deploy Terraform infrastructure  
-8. Create database tables  
+7. Generate docker image dependencies  
+8. Deploy Terraform infrastructure  
+9. Create database tables  
 
 ### Dependencies
 
@@ -65,19 +66,48 @@ CHANGE_ME
 
 ### Deployment instructions
 
-# TODO: update deployment instructions
-
-#### Install Dependencies
+#### 1. Install System Dependencies
 
 From [Dependencies section](#dependencies)
 
-#### Install python dependencies  
+#### 2. Install python dependencies  
 
 ```shell
 poetry install
 ```
 
-#### Deploy Terraform infrastructure  
+#### 3. Generate docker image dependencies
+
+##### 3.1. Generate wheel for apache docker image
+
+Build the current project:  
+
+````shell
+poetry build
+````
+
+Place the generated wills file at the **apache** docker image:  
+
+```shell
+cp dist/django_first_app-*-py3-none-any.whl infra/docker/django-polls-apache/
+```
+
+##### 3.2. Generate static giles for nginx docker image
+
+Set environment variables for django setting to enable manage.py script:  
+
+```shell
+. ./django_mysite_settings_envs.sh
+```
+
+Run django static files generation 
+(it's configured to output it directly into Docker image build dir):  
+
+```shell
+poetry run python manage.py collectstatic
+```
+
+#### 4. Deploy terraform infrastructure  
 
 The Terraform infrastructure consists basically of a PostgreSql server.  
 It has the following objects:
@@ -92,7 +122,7 @@ The Terraform is split in two folders:
 - build
 - exec
 
-##### Terraform build folder
+##### 4.1. Terraform build folder
 
 It creates the PostgreSql volume and downloads the Image from Docker hub.  
 It should be executed once.
@@ -101,7 +131,7 @@ It should be executed once.
 cd infra/terraform/build/ && terraform apply && terraform init && cd ../../..
 ```
 
-##### Terraform exec
+##### 4.2. Terraform exec
 
 It runs the PostgreSql server container.  
 It should be executed every time you want to turn on the infrastructure.
