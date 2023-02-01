@@ -123,7 +123,8 @@ USE_TZ = True
 
 STATIC_URL = 'http://localhost:8082/static/'
 
-static_dir = BASE_DIR / 'infra' / 'docker' / 'django-polls-apache' / 'static'
+static_dir = \
+    BASE_DIR / 'infra' / 'docker' / 'django-polls-nginx-static' / 'static'
 STATIC_ROOT = static_dir.as_posix()
 
 # Default primary key field type

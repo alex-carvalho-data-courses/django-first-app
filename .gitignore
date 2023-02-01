@@ -7,4 +7,4 @@ terraform.tfstate*
 
 dist/
 
-infra/docker/django-polls-apache/static/
+infra/docker/django-polls-nginx-static/static/
