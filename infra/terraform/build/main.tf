@@ -31,7 +31,7 @@ resource "docker_image" "apache_httpd_mod_wsgi" {
   }
 }
 
-resource "docker_image" "django_mysite_polls" {
+resource "docker_image" "django_polls_apache" {
   name = "local/django-polls-apache"
 
   depends_on = [docker_image.apache_httpd_mod_wsgi]
@@ -49,4 +49,14 @@ resource "docker_image" "django_mysite_polls" {
   }
 }
 
-# TODO: create a dedicated image for django-polls-nginx-static
+resource "docker_image" "django_polls_nginx_static" {
+  name = "local/django-polls-nginx-static"
+
+  build {
+    context = "../../docker/django-polls-nginx-static/"
+    tag     = ["local/django-polls-nginx-static:0.2.0"]
+    label = {
+      author : "alex carvalho"
+    }
+  }
+}
