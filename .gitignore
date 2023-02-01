@@ -9,4 +9,4 @@ dist/
 
 infra/docker/django-polls-nginx-static/static/
 
-# TODO: add infra/docker/django-polls-apache/*.whl after its deletion
+infra/docker/django-polls-apache/*.whl
