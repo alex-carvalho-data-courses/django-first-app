@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models.query import QuerySet
 from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
@@ -19,9 +20,11 @@ class Index(generic.ListView):
         ).order_by('-pub_date')[:5]
 
 
-class Detail(generic.DetailView):
+class Detail(LoginRequiredMixin, generic.DetailView):
     model = Question
     template_name = 'polls/detail.html'
+
+    login_url = '/admin/login/'
 
     def get_queryset(self) -> QuerySet:
         return Question.objects.filter(
